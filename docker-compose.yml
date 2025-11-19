@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - mern-net
+
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/amazona
+      - JWT_SECRET=mysecretjwt
+      - PORT=5000
+    depends_on:
+      - mongo
+    networks:
+      - mern-net
+
+  mongo:
+    image: mongo:6
+    restart: always
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - mern-net
+
+  create-admin:
+    build: ./backend
+    command: ["npm", "run", "create-admin"]
+    depends_on:
+      - backend
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/amazona
+    networks:
+      - mern-net
+
+networks:
+  mern-net:
+
+volumes:
+  mongo-data:
