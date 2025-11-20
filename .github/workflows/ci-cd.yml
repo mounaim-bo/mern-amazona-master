@@ -2,9 +2,11 @@ name: CI-CD MERN Amazona
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 env:
   REGISTRY: docker.io
@@ -25,29 +27,25 @@ jobs:
         with:
           node-version: 20
 
-      # Backend : on vérifie juste que les dépendances s'installent
       - name: Install backend dependencies
         working-directory: backend
         run: |
           npm ci || npm install
 
-      # Frontend : on installe et on build (ça sert de "test")
       - name: Install frontend dependencies
         working-directory: frontend
         run: |
           npm ci || npm install
 
-      - - name: Build frontend
-          working-directory: frontend
-          run: |
-            CI=false npm run build
+      - name: Build frontend
+        working-directory: frontend
+        run: |
+          CI=false npm run build
 
-#o,inoini ninoinio
   docker-build-and-push:
     name: Build & Push Docker images (CD)
     runs-on: ubuntu-latest
     needs: build-and-test
-    # On ne pousse dans DockerHub QUE pour les push sur main, pas pour les PR
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
@@ -63,7 +61,7 @@ jobs:
       - name: Build & push backend image
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: ./backend
           file: ./backend/Dockerfile
           push: true
           tags: |
@@ -73,7 +71,7 @@ jobs:
       - name: Build & push frontend image
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: ./frontend
           file: ./frontend/Dockerfile
           push: true
           tags: |
