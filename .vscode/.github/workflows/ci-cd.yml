@@ -38,11 +38,11 @@ jobs:
           npm ci || npm install
 
       - - name: Build frontend
-  working-directory: frontend
-  run: |
-    CI=false npm run build
+          working-directory: frontend
+          run: |
+            CI=false npm run build
 
-
+#o,inoini
   docker-build-and-push:
     name: Build & Push Docker images (CD)
     runs-on: ubuntu-latest
