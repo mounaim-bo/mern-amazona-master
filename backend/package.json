@@ -6,21 +6,22 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-  "create-admin": "node createAdmin.js",
+    "create-admin": "node createAdmin.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "cloudinary": "^1.28.1",
+    "cloudinary": "^2.8.0",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.2",
     "express-async-handler": "^1.2.0",
-    "jsonwebtoken": "^8.5.1",
-    "mailgun-js": "^0.22.0",
+    "jsonwebtoken": "^9.0.2",
+    "mailgun-js": "^0.6.7",
     "mongoose": "^6.1.5",
-    "multer": "^1.4.4",
+    "multer": "^2.0.2",
     "streamifier": "^0.1.1"
   },
   "devDependencies": {
